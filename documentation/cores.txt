@@ -1,0 +1,27 @@
+Gadugi
+Leelawadee UI
+
+#00705A
+
+Cores - 
+https://flatuicolors.com/palette/us
+https://mycolor.space/?hex=%2381ECEC&sub=1
+Azul Principal - #81ECEC
+Verde escuro - #00705A
+Azul escurto degrade - #63ADEB
+Branco claro - #EEFCFC
+
+Cores do box ---
+Verde - #A9FCA8
+Amarela - #F9F871
+Azul escura - #59CFF2
+Vermelha - #FF7C65
+
+---
+
+Inspirações
+https://dribbble.com/shots/6279100-Pharmagy-Medical-App
+
+
+agenda
+https://github.com/wix/react-native-calendars/issues/209

@@ -1,0 +1,15 @@
+npx sequelize-cli model:generate --name plano --attributes nome:string,preco:double,destroyAt:date
+npx sequelize-cli model:generate --name usuario --attributes nome:string,email:string,senha:string,planoId:integer,tenantId:string
+npx sequelize-cli model:generate --name plano_saude --attributes nomeConvenio:string,plano:string,pacienteId:integer
+npx sequelize-cli model:generate --name paciente --attributes nome:string,email:string,telefone1:string,telefone2:string,tipoPaciente:string,nascimento:date,image:string,observacao:string,endereco:string,cidade:string,bairro:string,tenantId:string,destroyAt:date,sexo:string,cor:string
+npx sequelize-cli model:generate --name servico --attributes nome:string,valor:decimal,tenantId:string
+npx sequelize-cli model:generate --name consulta --attributes pacienteId:integer,tenantId:string,observacao:string,dataConsulta:date,statusConsulta:string,horaInicio:date,horaFim:date,destroyAt:date,valorDesconto:decimal
+npx sequelize-cli model:generate --name consulta_servico --attributes consultaId:integer,servicoId:integer
+npx sequelize-cli model:generate --name prontuario --attributes pacienteId:integer,data:date,anotacoes:string,tenantId:string,destroyAt:date,statusProntuario:string
+npx sequelize-cli model:generate --name prontuario_anexo --attributes prontuarioId:integer,foto:string,destroyAt:date
+npx sequelize-cli model:generate --name movimentacao_financeira --attributes valor:decimal,consultaId:integer,tenantId:string,tipoMovimentacao:string,destroyAt:date
+
+
+
+
+
