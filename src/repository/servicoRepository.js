@@ -4,8 +4,9 @@ exports.create = payload => {
   return servico.create(payload).then(servico => servico);
 };
 
-exports.update = (payload) => {
-  return servico.scope({ method: ['setTenant', payload.tenantId] },'validaDelete')
+exports.update = payload => {
+  return servico
+    .scope({ method: ["setTenant", payload.tenantId] }, "validaDelete")
     .update(payload, {
       where: {
         id: payload.id
@@ -20,9 +21,10 @@ exports.update = (payload) => {
     });
 };
 
-exports.delete = (payload) => {
+exports.delete = payload => {
   payload.destroyAt = new Date().toISOString().slice(0, 24);
-  return servico.scope({ method: ['setTenant', payload.tenantId] },'validaDelete')
+  return servico
+    .scope({ method: ["setTenant", payload.tenantId] }, "validaDelete")
     .update(payload, {
       where: {
         id: payload.id
@@ -37,8 +39,9 @@ exports.delete = (payload) => {
     });
 };
 
-exports.findOne = (payload) => {
-  return servico.scope({ method: ['setTenant', payload.tenantId] },'validaDelete')
+exports.findOne = payload => {
+  return servico
+    .scope({ method: ["setTenant", payload.tenantId] }, "validaDelete")
     .findOne({
       where: {
         id: payload.id
@@ -50,6 +53,8 @@ exports.findOne = (payload) => {
 exports.findAll = tenantId => {
   return servico
     .scope({ method: ["setTenant", tenantId] }, "validaDelete")
-    .findAll()
+    .findAll({
+      order: [["createdAt", "DESC"]]
+    })
     .then(servico => servico);
 };

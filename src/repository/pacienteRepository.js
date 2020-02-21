@@ -60,7 +60,8 @@ exports.findOne = payload => {
     .findOne({
       where: {
         id: payload.id
-      }
+      },
+      order: [["createdAt", "DESC"]]
     })
     .then(res => res);
 };
@@ -74,7 +75,8 @@ exports.findAll = tenantId => {
           model: plano_saude,
           as: "plano_saude"
         }
-      ]
+      ],
+      order: [["createdAt", "DESC"]]
     })
     .then(paciente => paciente);
 };
@@ -93,7 +95,8 @@ exports.findAllForName = (tenantId, nome) => {
           model: plano_saude,
           as: "plano_saude"
         }
-      ]
+      ],
+      order: [["createdAt", "DESC"]]
     })
     .then(paciente => paciente);
 };

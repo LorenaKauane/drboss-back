@@ -81,6 +81,7 @@ exports.findAll = tenantId => {
   return prontuario
     .scope({ method: ["setTenant", tenantId] }, "validaDelete")
     .findAll({
+      order: [["createdAt", "DESC"]],
       include: [
         {
           model: prontuario_anexo,
@@ -103,7 +104,8 @@ exports.findAllForPaciente = (tenantId, pacienteId) => {
       ],
       where: {
         pacienteId: pacienteId
-      }
+      },
+      order: [["createdAt", "DESC"]]
     })
     .then(prontuario => prontuario);
 };

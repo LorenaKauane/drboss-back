@@ -5,10 +5,7 @@ let {
   movimentacao_financeira,
   paciente
 } = require("../../models");
-const {
-  parseISO,
-  format,
-} = require("date-fns");
+const { parseISO, format } = require("date-fns");
 const Op = require("../../models").Sequelize.Op;
 const Sequelize = require("../../models").Sequelize;
 
@@ -41,7 +38,8 @@ exports.findOne = payload => {
           model: consulta_servico,
           as: "consulta_servico"
         }
-      ]
+      ],
+      order: [["createdAt", "DESC"]]
     })
     .then(res => res);
 };
@@ -84,10 +82,11 @@ exports.findAll = tenantId => {
   return consulta
     .scope({ method: ["setTenant", tenantId] }, "validaDelete")
     .findAll({
+      order: [["createdAt", "DESC"]],
       include: [
         {
-          model:paciente,
-          as:'paciente'
+          model: paciente,
+          as: "paciente"
         },
         {
           model: consulta_servico,
@@ -112,10 +111,11 @@ exports.findAllForData = (tenantId, dtInicio, dtFim) => {
   return consulta
     .scope({ method: ["setTenant", tenantId] }, "validaDelete")
     .findAll({
+      order: [["createdAt", "DESC"]],
       include: [
         {
-          model:paciente,
-          as:'paciente'
+          model: paciente,
+          as: "paciente"
         },
         {
           model: consulta_servico,
@@ -132,11 +132,11 @@ exports.findAllForData = (tenantId, dtInicio, dtFim) => {
           as: "movimentacao_financeira"
         }
       ],
-      where:{
-        dataConsulta:{
-          [Op.between]: [dtInicio, dtFim],
+      where: {
+        dataConsulta: {
+          [Op.between]: [dtInicio, dtFim]
         }
-      },
+      }
     })
     .then(consulta => consulta);
 };
@@ -146,46 +146,47 @@ exports.findAllForStatus = (tenantId, dtInicio, dtFim) => {
     .scope({ method: ["setTenant", tenantId] }, "validaDelete")
     .findAll({
       attributes: [
-        [Sequelize.literal(`DATE("dataConsulta")`), 'date'],
-        ['statusConsulta','statusConsulta']
-    ],
-    // attributes: ['dataConsulta', 'statusConsulta'],
-      where:{
-        dataConsulta:{
-          [Op.between]: [dtInicio, dtFim],
+        [Sequelize.literal(`DATE("dataConsulta")`), "date"],
+        ["statusConsulta", "statusConsulta"]
+      ],
+      // attributes: ['dataConsulta', 'statusConsulta'],
+      order: [["createdAt", "DESC"]],
+      where: {
+        dataConsulta: {
+          [Op.between]: [dtInicio, dtFim]
         }
-      },
+      }
     })
     .then(items => {
-  const names = items.reduce((names, item,index) => {
-    let dots = {
-      key: index,
-      color: item.statusConsulta.cor
-    }
+      const names = items.reduce((names, item, index) => {
+        let dots = {
+          key: index,
+          color: item.statusConsulta.cor
+        };
 
-    if (!names[item.get('date')]) {
-      names[item.get('date')] ={dots:[]};
-    } else {
-      names[item.get('date')].dots.push(dots);
-    }
-    return names;
-  }, {});
+        if (!names[item.get("date")]) {
+          names[item.get("date")] = { dots: [] };
+        } else {
+          names[item.get("date")].dots.push(dots);
+        }
+        return names;
+      }, {});
 
-  //   if (!names[item.get('date')]) {
-  //     names[item.get('date')] =[dots];
-  //   } else {
-  //     names[item.get('date')].push(dots);
-  //   }
-  //   return names;
-  // }, {});
+      //   if (!names[item.get('date')]) {
+      //     names[item.get('date')] =[dots];
+      //   } else {
+      //     names[item.get('date')].push(dots);
+      //   }
+      //   return names;
+      // }, {});
 
-  // // get an array of results from the object
-  // const result = Object.keys(names).map((equalId) => {
-  //   return {
-  //     equalId: equalId,
-  //     names: names[key],
-  //   };
-  // })
-      return names
+      // // get an array of results from the object
+      // const result = Object.keys(names).map((equalId) => {
+      //   return {
+      //     equalId: equalId,
+      //     names: names[key],
+      //   };
+      // })
+      return names;
     });
 };

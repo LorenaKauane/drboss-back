@@ -63,7 +63,8 @@ exports.findAll = tenantId => {
             }
           ]
         }
-      ]
+      ],
+      order: [["createdAt", "DESC"]]
     })
     .then(movimentacao_financeira => movimentacao_financeira);
   // return movimentacao_financeira.scope({ method: ['setTenant', tenantId] },'validaDelete')

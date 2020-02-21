@@ -46,6 +46,7 @@ exports.findOne = (payload, tenantId) => {
       where: {
         id: payload.id
       },
+      order: [["createdAt", "DESC"]],
       include: [
         {
           model: consulta_servico,
