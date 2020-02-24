@@ -13,7 +13,7 @@ exports.salvar = async (req, res, next) => {
     }
 
     const consulta = await ConsultaRepository.create(req.body);
-    
+
     return res.status(200).send(consulta);
   } catch (error) {
     next(error);
@@ -55,7 +55,6 @@ exports.deletar = async (req, res, next) => {
 
     const consulta = await ConsultaRepository.findOne(req.body);
 
-
     if (!consulta) {
       return res
         .status(400)
@@ -66,7 +65,9 @@ exports.deletar = async (req, res, next) => {
       await ConsultaServicoRepository.destroy(consulta.id);
     }
 
-    const consultaDeletado = await ConsultaRepository.delete(consulta.dataValues);
+    const consultaDeletado = await ConsultaRepository.delete(
+      consulta.dataValues
+    );
 
     return res.status(200).send(consultaDeletado);
   } catch (error) {
@@ -86,10 +87,14 @@ exports.listar = async (req, res, next) => {
 
 exports.listarPorData = async (req, res, next) => {
   try {
-    const dtInicio =  req.params.dtInicio;
-    const dtFim = req.params.dtFim
+    const dtInicio = req.params.dtInicio;
+    const dtFim = req.params.dtFim;
 
-    const servicos = await ConsultaRepository.findAllForData(req.body.tenantId,dtInicio,dtFim);
+    const servicos = await ConsultaRepository.findAllForData(
+      req.body.tenantId,
+      dtInicio,
+      dtFim
+    );
     return res.status(200).send(servicos);
   } catch (error) {
     next(error);
@@ -98,10 +103,14 @@ exports.listarPorData = async (req, res, next) => {
 
 exports.listaPorStatusConsulta = async (req, res, next) => {
   try {
-    const dtInicio =  req.params.dtInicio;
-    const dtFim = req.params.dtFim
+    const dtInicio = req.params.dtInicio;
+    const dtFim = req.params.dtFim;
 
-    const servicos = await ConsultaRepository.findAllForStatus(req.body.tenantId,dtInicio,dtFim);
+    const servicos = await ConsultaRepository.findAllForStatus(
+      req.body.tenantId,
+      dtInicio,
+      dtFim
+    );
     return res.status(200).send(servicos);
   } catch (error) {
     next(error);

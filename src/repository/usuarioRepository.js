@@ -6,19 +6,29 @@ let generateHash = function(senha) {
 };
 
 exports.create = payload => {
-//  payload.senha = generateHash(payload.senha);
+  //  payload.senha = generateHash(payload.senha);
   return usuario.create(payload).then(usuario => usuario);
 };
 
-exports.esqueciSenha = payload => {
-	payload.senha = generateHash(payload.novaSenha);
+exports.update = payload => {
   return usuario
-  .scope({ method: ['setTenant', payload.tenantId] })
-  .update(payload, {
-		where: {
-			email: payload.email
-		}
-  });
+    .scope({ method: ["setTenant", payload.tenantId] })
+    .update(payload, {
+      where: {
+        email: payload.email
+      }
+    });
+};
+
+exports.esqueciSenha = payload => {
+  payload.senha = generateHash(payload.novaSenha);
+  return usuario
+    .scope({ method: ["setTenant", payload.tenantId] })
+    .update(payload, {
+      where: {
+        email: payload.email
+      }
+    });
 };
 
 exports.findByEmail = email => {
@@ -28,13 +38,23 @@ exports.findByEmail = email => {
     }
   });
 };
-
 exports.findById = id => {
-  return usuario.findOne({
-    where: {
-      id: id
-    }
-  })
+  return usuario
+    .findOne({
+      where: {
+        id: id
+      }
+    })
+    .then(usuario => usuario);
+};
+
+exports.findByTenant = tenantId => {
+  return usuario
+    .findOne({
+      where: {
+        tenantId: tenantId
+      }
+    })
     .then(usuario => usuario);
 };
 

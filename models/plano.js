@@ -17,6 +17,7 @@ module.exports = (sequelize, DataTypes) => {
         }
       },
       preco: DataTypes.DOUBLE,
+      quantidadeMaximoDias: DataTypes.INTEGER,
       destroyAt: DataTypes.DATE
     },
     {}

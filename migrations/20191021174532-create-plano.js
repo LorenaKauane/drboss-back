@@ -14,6 +14,9 @@ module.exports = {
       preco: {
         type: Sequelize.DOUBLE
       },
+      quantidadeMaximoDias: {
+        type: Sequelize.INTEGER
+      },
       destroyAt: {
         type: Sequelize.DATE
       },

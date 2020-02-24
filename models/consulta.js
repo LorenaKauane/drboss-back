@@ -3,12 +3,16 @@ const {
   format,
   formatRelative,
   formatDistance,
+  setDay,
+  setYear,
+  setMonth,
   setHours,
   setMinutes
 } = require("date-fns");
 const { pt } = require("date-fns/locale");
 const { zonedTimeToUtc } = require("date-fns-tz");
 // const setHours = require("date-fns/set_hours");
+const { formataStringParaBanco } = require("../src/util/dataUtil");
 const ENUM = require("../src/constant/enums");
 
 module.exports = (sequelize, DataTypes) => {
@@ -26,17 +30,15 @@ module.exports = (sequelize, DataTypes) => {
             "dd/MM/yyy hh:mm:ss"
           );
           return formattedDate;
+        },
+        set(valueToBeSet) {
+          if (valueToBeSet) {
+            this.setDataValue(
+              "dataConsulta",
+              formataStringParaBanco(valueToBeSet)
+            );
+          }
         }
-        // set(valueToBeSet) {
-        //   // padrao DD-MM-YYYY
-        //   console.log("entro");
-        //   const year = valueToBeSet.subString(6, valueToBeSet.length);
-        //   // const formattedDate = format(new Date(valueToBeSet), "YYYY-DD-MM");
-        //   console.log(year);
-        //   // const parsedDate = parseISO(valueToBeSet);
-        //   // const znDate = zonedTimeToUtc(parsedDate, "America/Sao_Paulo");
-        //   // this.setDataValue("dataConsulta", znDate);
-        // }
       },
       statusConsulta: {
         type: DataTypes.STRING,
@@ -54,17 +56,16 @@ module.exports = (sequelize, DataTypes) => {
           return formattedDate;
         },
         set(valueToBeSet) {
-          if(valueToBeSet) {
+          if (valueToBeSet) {
             const znDate = zonedTimeToUtc(new Date(), "America/Sao_Paulo");
 
             const hour = valueToBeSet.substring(0, 2);
             const minute = valueToBeSet.substring(3, 5);
             const horasComMinutos = setHours(znDate, hour);
             const horaInicio = setMinutes(horasComMinutos, minute);
-  
+
             this.setDataValue("horaInicio", horaInicio);
           }
-
         }
       },
       horaFim: {
@@ -77,14 +78,14 @@ module.exports = (sequelize, DataTypes) => {
           return formattedDate;
         },
         set(valueToBeSet) {
-          if(valueToBeSet) {
+          if (valueToBeSet) {
             const znDate = zonedTimeToUtc(new Date(), "America/Sao_Paulo");
 
             const hour = valueToBeSet.substring(0, 2);
             const minute = valueToBeSet.substring(3, 5);
             const horasComMinutos = setHours(znDate, hour);
             const horaFim = setMinutes(horasComMinutos, minute);
-  
+
             this.setDataValue("horaFim", horaFim);
           }
         }

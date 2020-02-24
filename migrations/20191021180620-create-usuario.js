@@ -31,6 +31,13 @@ module.exports = {
         allowNull: false,
         type: Sequelize.STRING
       },
+      dataUltimoPagamento: {
+        allowNull: false,
+        type: Sequelize.DATE,
+        defaultValue: function() {
+          return new Date();
+        }
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

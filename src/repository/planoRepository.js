@@ -40,3 +40,13 @@ exports.delete = payload => {
 exports.findAll = () => {
   return plano.findAll().then(plano => plano);
 };
+
+exports.findById = id => {
+  return plano
+    .findOne({
+      where: {
+        id: id
+      }
+    })
+    .then(plano => plano);
+};

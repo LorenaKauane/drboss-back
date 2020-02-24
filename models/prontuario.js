@@ -7,6 +7,7 @@ const {
 } = require("date-fns");
 const { pt } = require("date-fns/locale");
 const { zonedTimeToUtc } = require("date-fns-tz");
+const { formataStringParaBanco } = require("../src/util/dataUtil");
 
 module.exports = (sequelize, DataTypes) => {
   const prontuario = sequelize.define(
@@ -23,14 +24,9 @@ module.exports = (sequelize, DataTypes) => {
           return formattedDate;
         },
         set(valueToBeSet) {
-          //padrao DD-MM-YYYY
-          const year = valueToBeSet.substring(6, valueToBeSet.length);
-          const month = valueToBeSet.substring(3, 5);
-          const day = valueToBeSet.substring(0, 2);
-
-          const parsedDate = parseISO(`${year}-${month}-${day}`);
-          const znDate = zonedTimeToUtc(parsedDate, "America/Sao_Paulo");
-          this.setDataValue("data", znDate);
+          if (valueToBeSet) {
+            this.setDataValue("data", formataStringParaBanco(valueToBeSet));
+          }
         }
       },
       anotacoes: DataTypes.STRING,

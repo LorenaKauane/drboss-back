@@ -1,7 +1,6 @@
 const bcrypt = require("bcrypt");
 
 module.exports = (sequelize, DataTypes) => {
- 
   const usuario = sequelize.define(
     "usuario",
     {
@@ -40,10 +39,19 @@ module.exports = (sequelize, DataTypes) => {
           }
         }
       },
+      dataUltimoPagamento: {
+        type: DataTypes.DATE,
+        allowNull: false,
+        defaultValue: function() {
+          return new Date();
+        }
+      },
       planoId: DataTypes.INTEGER,
       tenantId: {
         allowNull: false,
-        defaultValue: function () { return Date.now().toString(); },
+        defaultValue: function() {
+          return Date.now().toString();
+        },
         type: DataTypes.STRING,
         noUpdate: true
       }
@@ -60,11 +68,10 @@ module.exports = (sequelize, DataTypes) => {
       },
       hooks: {
         beforeCreate: usuario => {
-         
           const salt = bcrypt.genSaltSync();
-          usuario.set('senha', bcrypt.hashSync(usuario.senha, salt));
-        },
-      },
+          usuario.set("senha", bcrypt.hashSync(usuario.senha, salt));
+        }
+      }
     }
   );
   usuario.associate = models => {

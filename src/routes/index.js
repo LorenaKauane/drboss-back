@@ -2,6 +2,7 @@ let express = require("express");
 let rotas = express.Router();
 const multer = require("multer");
 const tenantResolve = require("../middlewares/tenantResolve");
+const planoResolve = require("../middlewares/planoResolve");
 const autenticacao = require("../../autenticacao")();
 
 const storage = multer.diskStorage({
@@ -43,6 +44,7 @@ rotas.put(
   tenantResolve,
   UsuarioController.esqueciSenha
 );
+rotas.put("/usuario", tenantResolve, UsuarioController.update);
 rotas.get(
   "/usuario",
   [tenantResolve, autenticacao.authenticate()],
@@ -52,17 +54,27 @@ rotas.get(
 //Paciente
 rotas.post(
   "/paciente",
-  [tenantResolve, photoUpload.single("file")],
+  [
+    planoResolve,
+    tenantResolve,
+    photoUpload.single("file"),
+    autenticacao.authenticate()
+  ],
   PacienteController.salvar
 );
 rotas.put(
   "/paciente",
-  [tenantResolve, photoUpload.single("file")],
+  [
+    planoResolve,
+    tenantResolve,
+    photoUpload.single("file"),
+    autenticacao.authenticate()
+  ],
   PacienteController.editar
 );
 rotas.delete(
   "/paciente/:id",
-  [tenantResolve, autenticacao.authenticate()],
+  [planoResolve, tenantResolve, autenticacao.authenticate()],
   PacienteController.deletar
 );
 rotas.get(
@@ -79,17 +91,17 @@ rotas.get(
 //Serviço
 rotas.post(
   "/servico",
-  [tenantResolve, autenticacao.authenticate()],
+  [planoResolve, tenantResolve, autenticacao.authenticate()],
   ServicoController.salvar
 );
 rotas.put(
   "/servico",
-  [tenantResolve, autenticacao.authenticate()],
+  [planoResolve, tenantResolve, autenticacao.authenticate()],
   ServicoController.editar
 );
 rotas.delete(
   "/servico/:id",
-  [tenantResolve, autenticacao.authenticate()],
+  [planoResolve, tenantResolve, autenticacao.authenticate()],
   ServicoController.deletar
 );
 rotas.get(
@@ -99,18 +111,26 @@ rotas.get(
 );
 
 //Consulta
-rotas.post("/consulta", [tenantResolve], ConsultaController.salvar);
+rotas.post(
+  "/consulta",
+  [planoResolve, tenantResolve, autenticacao.authenticate()],
+  ConsultaController.salvar
+);
 rotas.put(
   "/consulta",
-  [tenantResolve, autenticacao.authenticate()],
+  [planoResolve, tenantResolve, autenticacao.authenticate()],
   ConsultaController.editar
 );
 rotas.delete(
   "/consulta",
-  [tenantResolve, autenticacao.authenticate()],
+  [planoResolve, tenantResolve, autenticacao.authenticate()],
   ConsultaController.deletar
 );
-rotas.get("/consulta", [tenantResolve], ConsultaController.listar);
+rotas.get(
+  "/consulta",
+  [tenantResolve, autenticacao.authenticate()],
+  ConsultaController.listar
+);
 rotas.get(
   "/consulta/:dtInicio/:dtFim",
   [tenantResolve],
@@ -124,22 +144,27 @@ rotas.get(
 //Prontuario
 rotas.post(
   "/prontuario",
-  [tenantResolve, photoUpload.array("file", 3)],
+  [
+    planoResolve,
+    tenantResolve,
+    photoUpload.array("file", 3),
+    autenticacao.authenticate()
+  ],
   ProntuarioController.salvar
 );
 rotas.put(
   "/prontuario",
-  [tenantResolve, autenticacao.authenticate()],
+  [planoResolve, tenantResolve, autenticacao.authenticate()],
   ProntuarioController.editar
 );
 rotas.delete(
   "/prontuario/:id",
-  [tenantResolve, autenticacao.authenticate()],
+  [planoResolve, tenantResolve, autenticacao.authenticate()],
   ProntuarioController.deletar
 );
 rotas.get(
   "/prontuario",
-  [tenantResolve, autenticacao.authenticate()],
+  [planoResolve, tenantResolve, autenticacao.authenticate()],
   ProntuarioController.listar
 );
 rotas.get(
@@ -151,17 +176,17 @@ rotas.get(
 //Movimentacao financeira
 rotas.post(
   "/movimentacao-financeira",
-  [tenantResolve, autenticacao.authenticate()],
+  [planoResolve, tenantResolve, autenticacao.authenticate()],
   MovimentacaoFinanceiraController.salvar
 );
 rotas.put(
   "/movimentacao-financeira",
-  [tenantResolve, autenticacao.authenticate()],
+  [planoResolve, tenantResolve, autenticacao.authenticate()],
   MovimentacaoFinanceiraController.editar
 );
 rotas.delete(
   "/movimentacao-financeira",
-  [tenantResolve, autenticacao.authenticate()],
+  [planoResolve, tenantResolve, autenticacao.authenticate()],
   MovimentacaoFinanceiraController.deletar
 );
 rotas.get(
@@ -173,7 +198,7 @@ rotas.get(
 //Prontuario_anexo
 rotas.delete(
   "/prontuario-anexo",
-  [tenantResolve, autenticacao.authenticate()],
+  [planoResolve, tenantResolve, autenticacao.authenticate()],
   ProntuarioAnexoController.deletar
 );
 
