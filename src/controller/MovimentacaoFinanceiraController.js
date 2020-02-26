@@ -64,9 +64,13 @@ exports.deletar = async (req, res, next) => {
 
 exports.listar = async (req, res, next) => {
   try {
-    //Testar
-    const movimentacaoFinanceiras = await movimentacaoFinanceiraRepository.findAll(
-      req.body.tenantId
+    const dtInicio = req.params.dtInicio;
+    const dtFim = req.params.dtFim;
+
+    const movimentacaoFinanceiras = await movimentacaoFinanceiraRepository.findAllForData(
+      req.body.tenantId,
+      dtInicio,
+      dtFim
     );
     return res.status(200).send(movimentacaoFinanceiras);
   } catch (error) {

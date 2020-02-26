@@ -10,7 +10,8 @@ module.exports = (sequelize, DataTypes) => {
       tipoMovimentacao: DataTypes.ENUM(ENUM.TIPO_MOVIMENTACAO),
       tipoPagamento: DataTypes.ENUM(ENUM.TIPO_PAGAMENTO),
       destroyAt: DataTypes.DATE
-    }, {
+    },
+    {
       scopes: {
         setTenant: tenantId => {
           return {
@@ -29,6 +30,7 @@ module.exports = (sequelize, DataTypes) => {
   );
   movimentacao_financeira.associate = function(models) {
     movimentacao_financeira.belongsTo(models.consulta, {
+      // as: "movimentacao_financeira",
       foreignKey: "consultaId",
       onDelete: "CASCADE"
     });

@@ -122,7 +122,7 @@ rotas.put(
   ConsultaController.editar
 );
 rotas.delete(
-  "/consulta",
+  "/consulta/:id",
   [planoResolve, tenantResolve, autenticacao.authenticate()],
   ConsultaController.deletar
 );
@@ -190,7 +190,7 @@ rotas.delete(
   MovimentacaoFinanceiraController.deletar
 );
 rotas.get(
-  "/movimentacao-financeira",
+  "/movimentacao-financeira/:dtInicio/:dtFim",
   [tenantResolve, autenticacao.authenticate()],
   MovimentacaoFinanceiraController.listar
 );

@@ -1,5 +1,6 @@
 let { movimentacao_financeira, consulta, paciente } = require("../../models");
-
+const Op = require("../../models").Sequelize.Op;
+const Sequelize = require("../../models").Sequelize;
 exports.create = payload => {
   return movimentacao_financeira
     .create(payload)
@@ -75,4 +76,29 @@ exports.findAll = tenantId => {
   //     }]
   //   })
   //   .then(movimentacao_financeira => movimentacao_financeira);
+};
+
+exports.findAllForData = (tenantId, dtInicio, dtFim) => {
+  return movimentacao_financeira
+    .scope({ method: ["setTenant", tenantId] }, "validaDelete")
+    .findAll({
+      order: [["createdAt", "DESC"]],
+      include: [
+        {
+          model: consulta,
+          include: [
+            {
+              model: paciente,
+              as: "paciente"
+            }
+          ]
+        }
+      ],
+      where: {
+        createdAt: {
+          [Op.between]: [dtInicio, dtFim]
+        }
+      }
+    })
+    .then(movimentacao_financeira => movimentacao_financeira);
 };

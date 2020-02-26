@@ -134,7 +134,7 @@ exports.findAllForData = (tenantId, dtInicio, dtFim) => {
       ],
       where: {
         dataConsulta: {
-          [Op.between]: [dtInicio, dtFim]
+          [Op.between]: [new Date(dtInicio), dtFim]
         }
       }
     })

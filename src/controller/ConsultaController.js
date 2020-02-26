@@ -49,9 +49,8 @@ exports.editar = async (req, res, next) => {
 
 exports.deletar = async (req, res, next) => {
   try {
-    if (!req.body) {
-      return res.status(400).send({ message: "Não foi possivel deletar!" });
-    }
+    const { id } = req.params;
+    req.body.id = id;
 
     const consulta = await ConsultaRepository.findOne(req.body);
 
