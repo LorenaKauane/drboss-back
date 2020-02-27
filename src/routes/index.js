@@ -30,9 +30,9 @@ const enumController = require("../controller/enumController");
 //auth.authenticate()
 //Plano
 rotas.post("/plano", PlanoController.salvar);
-rotas.put("/plano", PlanoController.editar);
-rotas.delete("/plano", PlanoController.deletar);
-rotas.get("/plano", PlanoController.listar);
+// rotas.put("/plano", PlanoController.editar);
+// rotas.delete("/plano", PlanoController.deletar);
+// rotas.get("/plano", PlanoController.listar);
 
 //Autenticacao
 rotas.post("/autenticacao", AutenticacaoController.validaLogin);
@@ -185,7 +185,7 @@ rotas.put(
   MovimentacaoFinanceiraController.editar
 );
 rotas.delete(
-  "/movimentacao-financeira",
+  "/movimentacao-financeira/:id",
   [planoResolve, tenantResolve, autenticacao.authenticate()],
   MovimentacaoFinanceiraController.deletar
 );

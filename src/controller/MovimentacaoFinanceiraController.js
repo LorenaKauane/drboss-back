@@ -40,9 +40,8 @@ exports.editar = async (req, res, next) => {
 
 exports.deletar = async (req, res, next) => {
   try {
-    if (!req.body) {
-      return res.status(400).send({ message: "Não foi possivel deletar!" });
-    }
+    const { id } = req.params;
+    req.body.id = id;
 
     const movimentacaoFinanceira = await movimentacaoFinanceiraRepository.findOne(
       req.body
@@ -51,7 +50,7 @@ exports.deletar = async (req, res, next) => {
     if (!movimentacaoFinanceira) {
       return res.status(400).send({ message: "Não foi encontrado" });
     }
-
+    console.log(movimentacaoFinanceira);
     const movimentacaoFinanceiraDeletado = await movimentacaoFinanceiraRepository.delete(
       movimentacaoFinanceira.dataValues
     );

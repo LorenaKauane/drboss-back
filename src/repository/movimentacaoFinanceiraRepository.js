@@ -7,18 +7,21 @@ exports.create = payload => {
     .then(movimentacao_financeira => movimentacao_financeira);
 };
 
-exports.findOne = (payload, tenantId) => {
-  return movimentacao_financeira //.scope({ method: ['setTenant', tenantId] })
-    .findAll({
+exports.findOne = payload => {
+  return movimentacao_financeira
+    .scope({ method: ["setTenant", payload.tenantId] }, "validaDelete")
+    .findOne({
       where: {
         id: payload.id
-      }
+      },
+      order: [["createdAt", "DESC"]]
     })
     .then(res => res);
 };
 
 exports.update = (payload, tenantId) => {
-  return movimentacao_financeira //.scope({ method: ['setTenant', tenantId] })
+  return movimentacao_financeira
+    .scope({ method: ["setTenant", payload.tenantId] }, "validaDelete")
     .update(payload, {
       where: {
         id: payload.id
@@ -33,9 +36,10 @@ exports.update = (payload, tenantId) => {
     });
 };
 
-exports.delete = (payload, tenantId) => {
+exports.delete = payload => {
   payload.destroyAt = new Date().toISOString().slice(0, 24);
-  return movimentacao_financeira //.scope({ method: ['setTenant', tenantId] })
+  return movimentacao_financeira
+    .scope({ method: ["setTenant", payload.tenantId] })
     .update(payload, {
       where: {
         id: payload.id
