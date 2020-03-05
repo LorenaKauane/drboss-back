@@ -32,7 +32,7 @@ const enumController = require("../controller/enumController");
 rotas.post("/plano", PlanoController.salvar);
 // rotas.put("/plano", PlanoController.editar);
 // rotas.delete("/plano", PlanoController.deletar);
-// rotas.get("/plano", PlanoController.listar);
+rotas.get("/plano", PlanoController.listar);
 
 //Autenticacao
 rotas.post("/autenticacao", AutenticacaoController.validaLogin);
@@ -133,12 +133,12 @@ rotas.get(
 );
 rotas.get(
   "/consulta/:dtInicio/:dtFim",
-  [tenantResolve],
+  [planoResolve, tenantResolve, autenticacao.authenticate()],
   ConsultaController.listarPorData
 );
 rotas.get(
   "/consulta/:dtInicio/:dtFim/statusConsulta",
-  [tenantResolve],
+  [planoResolve, tenantResolve, autenticacao.authenticate()],
   ConsultaController.listaPorStatusConsulta
 );
 //Prontuario
@@ -191,7 +191,7 @@ rotas.delete(
 );
 rotas.get(
   "/movimentacao-financeira/:dtInicio/:dtFim",
-  [tenantResolve, autenticacao.authenticate()],
+  [planoResolve, tenantResolve, autenticacao.authenticate()],
   MovimentacaoFinanceiraController.listar
 );
 

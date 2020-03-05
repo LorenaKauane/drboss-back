@@ -54,6 +54,7 @@ module.exports = function(passport) {
             if (!usuario) return done(null, false, "Email ou senha incorretos");
 
             if (bcrypt.compareSync(senha, usuario.senha)) {
+              console.log("reqqq", _req.body);
               const payload = { id: usuario.id };
               const token = jwt.encode(payload, config.jwtSecret);
               const response = {
