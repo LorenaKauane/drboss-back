@@ -24,7 +24,6 @@ exports.salvar = async (req, res, next) => {
   }
 };
 
-////Editar ou apagar os anexos, validar
 exports.editar = async (req, res, next) => {
   try {
     if (!req.body) {
@@ -92,7 +91,6 @@ exports.deletar = async (req, res, next) => {
 
 exports.listar = async (req, res, next) => {
   try {
-    //Testar
     const prontuarios = await ProntuarioRepository.findAll(req.body.tenantId);
     return res.status(200).send(prontuarios);
   } catch (error) {

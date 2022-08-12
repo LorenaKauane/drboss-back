@@ -11,7 +11,6 @@ const {
 } = require("date-fns");
 const { pt } = require("date-fns/locale");
 const { zonedTimeToUtc } = require("date-fns-tz");
-// const setHours = require("date-fns/set_hours");
 const { formataStringParaBanco } = require("../src/util/dataUtil");
 const ENUM = require("../src/constant/enums");
 
@@ -33,7 +32,6 @@ module.exports = (sequelize, DataTypes) => {
         },
         set(valueToBeSet) {
           if (valueToBeSet) {
-            // this.setDataValue("dataConsulta", "202002-26 01:00");
             this.setDataValue(
               "dataConsulta",
               formataStringParaBanco(valueToBeSet)
@@ -119,7 +117,6 @@ module.exports = (sequelize, DataTypes) => {
       onDelete: "CASCADE"
     });
     consulta.hasOne(models.movimentacao_financeira, {
-      // as: "movimentacao_financeira",
       foreignKey: "consultaId",
       onDelete: "CASCADE"
     });

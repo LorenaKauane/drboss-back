@@ -59,7 +59,6 @@ exports.deletar = async (req, res, next) => {
 
 exports.listar = async (req, res, next) => {
   try {
-    //Testar
     const servicos = await ServicoRepository.findAll(req.body.tenantId);
     return res.status(200).send(servicos);
   } catch (error) {

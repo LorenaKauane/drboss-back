@@ -30,7 +30,6 @@ module.exports = (sequelize, DataTypes) => {
   );
   movimentacao_financeira.associate = function(models) {
     movimentacao_financeira.belongsTo(models.consulta, {
-      // as: "movimentacao_financeira",
       foreignKey: "consultaId",
       onDelete: "CASCADE"
     });

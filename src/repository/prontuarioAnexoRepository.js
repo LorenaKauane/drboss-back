@@ -5,7 +5,7 @@ exports.bulkCreate = (payload, tenantId) => {
 };
 
 exports.update = (payload, tenantId) => {
-  return prontuario_anexo //.scope({ method: ['setTenant', tenantId] })
+  return prontuario_anexo
     .update(payload, {
       where: {
         id: payload.id
@@ -41,7 +41,7 @@ exports.destroyById = payload => {
 };
 
 exports.findOne = (payload, tenantId) => {
-  return prontuario_anexo //.scope({ method: ['setTenant', tenantId] })
+  return prontuario_anexo
     .findAll({
       where: {
         id: payload.id

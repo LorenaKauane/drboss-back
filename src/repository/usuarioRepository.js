@@ -6,7 +6,6 @@ let generateHash = function(senha) {
 };
 
 exports.create = payload => {
-  //  payload.senha = generateHash(payload.senha);
   return usuario.create(payload).then(usuario => usuario);
 };
 

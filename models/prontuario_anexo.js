@@ -18,9 +18,6 @@ module.exports = (sequelize, DataTypes) => {
     }
   );
   prontuario_anexo.associate = function(models) {
-    // prontuario_anexo.belongsTo(models.prontuario, {
-    //   foreignKey: "prontuarioId"
-    // });
     prontuario_anexo.belongsTo(models.prontuario, {
       as: "prontuario",
       foreignKey: "prontuarioId"

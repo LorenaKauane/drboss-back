@@ -149,7 +149,6 @@ exports.findAllForStatus = (tenantId, dtInicio, dtFim) => {
         [Sequelize.literal(`DATE("dataConsulta")`), "date"],
         ["statusConsulta", "statusConsulta"]
       ],
-      // attributes: ['dataConsulta', 'statusConsulta'],
       order: [["createdAt", "DESC"]],
       where: {
         dataConsulta: {
@@ -171,22 +170,6 @@ exports.findAllForStatus = (tenantId, dtInicio, dtFim) => {
         }
         return names;
       }, {});
-
-      //   if (!names[item.get('date')]) {
-      //     names[item.get('date')] =[dots];
-      //   } else {
-      //     names[item.get('date')].push(dots);
-      //   }
-      //   return names;
-      // }, {});
-
-      // // get an array of results from the object
-      // const result = Object.keys(names).map((equalId) => {
-      //   return {
-      //     equalId: equalId,
-      //     names: names[key],
-      //   };
-      // })
       return names;
     });
 };
